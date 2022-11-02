@@ -57,15 +57,17 @@ describe("Metaverse contract", function () {
             const { metaverse, owner,addr1 } = await loadFixture(deployTokenFixture);
             let listingPrice = await metaverse.cost();
       listingPrice = listingPrice.toString()
-              
+      //console.log("listingPrice : ",listingPrice)
+            //const cost = {value:ethers.utils.parseEther('0.1'),}           
             expect( await 
                   metaverse.connect(addr1).mint("School",4,4,4,10,20,10,{ value: listingPrice }))
-                  expect(await metaverse.connect(owner).withdraw())
+                  
+          expect(await metaverse.connect(owner).withdraw())
           
           
           balance = await metaverse.provider.getBalance(owner.address)
           balance = ethers.utils.formatEther(balance)
-          console.log("etherWithdrawnByOwner :",balance)
+           console.log("etherWithdrawnByOwner :",balance)
           
         })
     
