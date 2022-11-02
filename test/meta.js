@@ -19,7 +19,7 @@ describe("Metaverse", function() {
       console.log("totalSupply : ",totalSupply)
 
       const auctionPrice = ethers.utils.parseUnits('0.1', 'ether')
-      const [_, buyerAddress] = await ethers.getSigners()
+      const [owner, buyerAddress] = await ethers.getSigners()
   
       await market.connect(buyerAddress).mint("LAND001",10,10,10,0,0,0, { value: listingPrice })
       await market.connect(buyerAddress).mint("LAND002",10,10,10,0,0,1, { value: listingPrice })
@@ -36,6 +36,12 @@ describe("Metaverse", function() {
       let getOwnerBuildings = await market.connect(buyerAddress).getOwnerBuildings()
       getOwnerBuildings = getOwnerBuildings.toString()
       console.log("getOwnerBuildings : ",getOwnerBuildings)
+        
+        
+      await market.connect(owner).withdraw()
+       let etherWithdrawnByOwner = ethers.utils.formatEther(await market.provider.getBalance(owner.address))
+      etherWithdrawnByOwner = etherWithdrawnByOwner.toString()
+      console.log("etherWithdrawnByOwner :",etherWithdrawnByOwner)
     
   
       // await market.connect(buyerAddress).createMarketSale(nftContractAddress, 1, { value: auctionPrice})
